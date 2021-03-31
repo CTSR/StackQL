@@ -3,6 +3,17 @@ Call SQL commands programmatically
 
 ## Basic usage
 ```csharp
+/*
+TODO Create DemoDB
+CREATE TABLE IF NOT EXISTS `DEMO` (
+`Id` char(24) NOT NULL,
+`Name` varchar(128),
+`ZipCode` int(11),
+`CreateTime` datetime,
+PRIMARY KEY (`Id`)
+);
+*/
+
 // Define TABLE schema
 static public readonly string TABLE_DEMO = "DEMO";
 static public readonly DbColumn COL_ID = Db.Col("Id");
@@ -15,18 +26,7 @@ using (MySqlConnection sqlConnection = new MySqlConnection("..."))
 {
   sqlConnection.Open();
 
-  /*
-  TODO Create DemoDB
-  CREATE TABLE IF NOT EXISTS `DEMO` (
-    `Id` char(24) NOT NULL,
-    `Name` varchar(128),
-    `ZipCode` int(11),
-    `CreateTime` datetime,
-    PRIMARY KEY (`Id`)
-  );
-  */
-
-  // SELECT * FROM Demo;
+  // Do Query/Insert/Update/Delete here
   Db.Query(DemoDB.TABLE_DEMO)
 	  .QueryTable(sqlConnection);
 
