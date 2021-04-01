@@ -55,6 +55,72 @@ Db.Query(DemoDB.TABLE_DEMO)
   )
   .QueryTable(sqlConnection);
 
+// SELECT Id,Name FROM Demo WHERE Id>'123' ORDER BY ZipCode, Name DESC;
+Db.Query(DemoDB.TABLE_DEMO)
+  .Select(
+      DemoDB.COL_ID,
+      DemoDB.COL_NAME
+  )
+  .Where(
+      Db.Eq(DemoDB.COL_ID, DbEquation.Op.Gt, "123")     // Id > '123'
+  )
+  .OrderBy(       // Order By
+      DemoDB.COL_ZIP_CODE,        // ZipCode
+      DemoDB.COL_NAME.DESC        // Name DESC
+  )
+  .QueryTable(sqlConnection);
+```
+
+## Insert
+```csharp
+// Insert DEMO Id,Name,ZipCode,CreateTime VALUES("789", "HELLO", "201", NOW());
+Db.Insert(DemoDB.TABLE_DEMO)
+  .ColumnValue(DemoDB.COL_ID, "789")
+  .ColumnValue(DemoDB.COL_NAME, "HELLO")
+  .ColumnValue(DemoDB.COL_ZIP_CODE, "201")
+  .ColumnValue(DemoDB.COL_CREATE_TIME, Db.Func("NOW"))    // Eq. DbDateTime.SERVER_NOW
+  .Insert(sqlConnection);
+```
+
+## Transaction & Update
+```csharp
+// Transaction
+MySqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
+try
+{
+  // Update DEMO SET Name="HELLO2" WHERE Id="789";
+  Db.Update(DemoDB.TABLE_DEMO)
+      .Set(DemoDB.COL_NAME, "HELLO2")
+      .Where(
+          Db.EqColEqVal(DemoDB.COL_ID, "789")
+      )
+      .Update(sqlConnection, sqlTransaction);
+
+  // TODO:
+  throw new Exception("make some exception");
+
+  // Commit
+  sqlTransaction.Commit();
+}
+catch (Exception)
+{
+  // Rollback
+  sqlTransaction.Rollback();
+}
+```
+
+## Delete
+```csharp
+// Delete FROM DEMO WHERE Id="789";
+Db.Delete(DemoDB.TABLE_DEMO)
+    .Where(
+        Db.EqColEqVal(DemoDB.COL_ID, "789")
+    )
+    .Delete(sqlConnection);
+```
+
+## WHERE conditions
+```csharp
 // SELECT Id,Name FROM Demo WHERE Id>'123' AND Id<'456';
 Db.Query(DemoDB.TABLE_DEMO)
   .Select(
@@ -123,69 +189,6 @@ Db.Query(DemoDB.TABLE_DEMO)
       )
   )
   .QueryTable(sqlConnection);
-
-// SELECT Id,Name FROM Demo WHERE Id>'123' ORDER BY ZipCode, Name DESC;
-Db.Query(DemoDB.TABLE_DEMO)
-  .Select(
-      DemoDB.COL_ID,
-      DemoDB.COL_NAME
-  )
-  .Where(
-      Db.Eq(DemoDB.COL_ID, DbEquation.Op.Gt, "123")     // Id > '123'
-  )
-  .OrderBy(       // Order By
-      DemoDB.COL_ZIP_CODE,        // ZipCode
-      DemoDB.COL_NAME.DESC        // Name DESC
-  )
-  .QueryTable(sqlConnection);
-```
-
-## Insert
-```csharp
-// Insert DEMO Id,Name,ZipCode,CreateTime VALUES("789", "HELLO", "201", NOW());
-Db.Insert(DemoDB.TABLE_DEMO)
-  .ColumnValue(DemoDB.COL_ID, "789")
-  .ColumnValue(DemoDB.COL_NAME, "HELLO")
-  .ColumnValue(DemoDB.COL_ZIP_CODE, "201")
-  .ColumnValue(DemoDB.COL_CREATE_TIME, Db.Func("NOW"))    // Eq. DbDateTime.SERVER_NOW
-  .Insert(sqlConnection);
-```
-
-## Transaction & Update
-```csharp
-// Transaction
-MySqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
-try
-{
-  // Update DEMO SET Name="HELLO2" WHERE Id="789";
-  Db.Update(DemoDB.TABLE_DEMO)
-      .Set(DemoDB.COL_NAME, "HELLO2")
-      .Where(
-          Db.EqColEqVal(DemoDB.COL_ID, "789")
-      )
-      .Update(sqlConnection, sqlTransaction);
-
-  // TODO:
-  throw new Exception("make some exception");
-
-  // Commit
-  sqlTransaction.Commit();
-}
-catch (Exception)
-{
-  // Rollback
-  sqlTransaction.Rollback();
-}
-```
-
-## Delete
-```csharp
-// Delete FROM DEMO WHERE Id="789";
-Db.Delete(DemoDB.TABLE_DEMO)
-    .Where(
-        Db.EqColEqVal(DemoDB.COL_ID, "789")
-    )
-    .Delete(sqlConnection);
 ```
 
 ## Optional WHERE conditions
