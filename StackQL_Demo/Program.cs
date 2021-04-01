@@ -212,6 +212,11 @@ namespace StackQL_Demo
                 .Where(Db.EqColEqVal(DemoDB.COL_ID, key))
                 .QueryFirst(sqlConnection, sqlTransaction);
 
+            if(row == null)
+            {
+                return null;
+            }
+
             DemoItem item = new DemoItem();
             item.Id = row[DemoDB.COL_ID.Text].ToString();
             item.Name = row[DemoDB.COL_NAME.Text].ToString();
