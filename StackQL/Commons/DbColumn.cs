@@ -30,6 +30,14 @@
             }
         }
 
+        public string Text
+        {
+            get
+            {
+                return ToString();
+            }
+        }
+
         override public string Render(DbParams args)
         {
             return ToString();

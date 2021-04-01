@@ -6,7 +6,7 @@ namespace StackQL
     public class Db
     {
         /// <summary>
-        /// 輸出指令文字
+        /// Generate SQL command
         /// </summary>
         static public string Render(DbParams args, object value)
         {
@@ -43,7 +43,7 @@ namespace StackQL
         }
 
         /// <summary>
-        /// 輸出指令文字
+        /// Generate SQL array
         /// </summary>
         static public string RenderArray(DbParams args, IEnumerable values)
         {
