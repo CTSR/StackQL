@@ -218,3 +218,47 @@ Db.Query(DemoDB.TABLE_DEMO)
   )
   .QueryTable(sqlConnection);
 ```
+
+## Cache
+```csharp
+// Define data modal
+public class DemoItem
+{
+    public string Id;
+    public string Name;
+    public int ZipCode;
+    public DateTime CreateTime;
+}
+
+// Impletement query method
+public object QueryForCache(MySqlConnection sqlConnection, MySqlTransaction sqlTransaction, string key)
+{
+    DataRow row = Db.Query(DemoDB.TABLE_DEMO)
+        .Select(
+            DemoDB.COL_ID,
+            DemoDB.COL_NAME,
+            DemoDB.COL_ZIP_CODE,
+            DemoDB.COL_CREATE_TIME
+        )
+        .Where(Db.EqColEqVal(DemoDB.COL_ID, key))
+        .QueryFirst(sqlConnection, sqlTransaction);
+
+    DemoItem item = new DemoItem();
+    item.Id = row[DemoDB.COL_ID.Text].ToString();
+    item.Name = row[DemoDB.COL_NAME.Text].ToString();
+    item.ZipCode = Convert.ToInt32(row[DemoDB.COL_ZIP_CODE.Text]);
+    item.CreateTime = (DateTime) DbDateTime.FromDb(row, DemoDB.COL_CREATE_TIME.Text);
+
+    return item;
+}
+```
+
+```csharp
+// Use catche
+DbCache catcheDemo = new DbCache(new MySqlConnection("..."));
+DemoItem item123 = catcheDemo.DefaultCache(QueryForCache, "123") as DemoItem;			// from DB
+DemoItem item123_again = catcheDemo.DefaultCache(QueryForCache, "123") as DemoItem;		// from Cache
+
+// Remove catche
+catcheDemo.RemoveCache("123");
+```
