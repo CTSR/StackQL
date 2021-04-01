@@ -22,7 +22,9 @@ public class DemoDB {
   static public readonly DbColumn COL_ZIP_CODE = Db.Col("ZipCode");
   static public readonly DbColumn COL_CREATE_TIME = Db.Col("CreateTime");
 }
+```
 
+```csharp
 // TODO: fill db connection arguments
 using (MySqlConnection sqlConnection = new MySqlConnection("..."))
 {
