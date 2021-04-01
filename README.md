@@ -231,7 +231,7 @@ public class DemoItem
 }
 
 // Impletement query method
-public object QueryByCatche(MySqlConnection sqlConnection, MySqlTransaction sqlTransaction, string key)
+public object QueryForCache(MySqlConnection sqlConnection, MySqlTransaction sqlTransaction, string key)
 {
     DataRow row = Db.Query(DemoDB.TABLE_DEMO)
         .Select(
@@ -256,8 +256,8 @@ public object QueryByCatche(MySqlConnection sqlConnection, MySqlTransaction sqlT
 ```csharp
 // Use catche
 DbCache catcheDemo = new DbCache(new MySqlConnection("..."));
-DemoItem item123 = catcheDemo.DefaultCache(QueryByCatche, "123") as DemoItem;			// from DB
-DemoItem item123_again = catcheDemo.DefaultCache(QueryByCatche, "123") as DemoItem;		// from Cache
+DemoItem item123 = catcheDemo.DefaultCache(QueryForCache, "123") as DemoItem;			// from DB
+DemoItem item123_again = catcheDemo.DefaultCache(QueryForCache, "123") as DemoItem;		// from Cache
 
 // Remove catche
 catcheDemo.RemoveCache("123");
