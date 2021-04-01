@@ -185,7 +185,7 @@ Db.Delete(DemoDB.TABLE_DEMO)
     .Where(
         Db.EqColEqVal(DemoDB.COL_ID, "789")
     )
-    .Delete(sqlConnection, sqlTransaction);
+    .Delete(sqlConnection);
 ```
 
 ## Optional WHERE conditions
