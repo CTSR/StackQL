@@ -151,13 +151,13 @@ Db.Insert(DemoDB.TABLE_DEMO)
   .Insert(sqlConnection);
 ```
 
-## Transaction and Update
+## Transaction & Update
 ```csharp
 // Transaction
 MySqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
 try
 {
-  // Update
+  // Update DEMO SET Name="HELLO2" WHERE Id="789";
   Db.Update(DemoDB.TABLE_DEMO)
       .Set(DemoDB.COL_NAME, "HELLO2")
       .Where(
@@ -176,6 +176,16 @@ catch (Exception)
   // Rollback
   sqlTransaction.Rollback();
 }
+```
+
+## Delete
+```csharp
+// Delete FROM DEMO WHERE Id="789";
+Db.Delete(DemoDB.TABLE_DEMO)
+    .Where(
+        Db.EqColEqVal(DemoDB.COL_ID, "789")
+    )
+    .Delete(sqlConnection, sqlTransaction);
 ```
 
 ## Optional WHERE conditions
