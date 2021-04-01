@@ -43,7 +43,9 @@ Db.Query(DemoDB.TABLE_DEMO)
       DemoDB.COL_NAME
   )
   .QueryTable(sqlConnection);
+```
 
+```csharp
 // SELECT Id,Name FROM Demo WHERE Id='123';
 Db.Query(DemoDB.TABLE_DEMO)
   .Select(
@@ -54,7 +56,9 @@ Db.Query(DemoDB.TABLE_DEMO)
       Db.EqColEqVal(DemoDB.COL_ID, "123")     // Id = '123'
   )
   .QueryTable(sqlConnection);
+```
 
+```csharp
 // SELECT Id,Name FROM Demo WHERE Id>'123' ORDER BY ZipCode, Name DESC;
 Db.Query(DemoDB.TABLE_DEMO)
   .Select(
@@ -134,7 +138,9 @@ Db.Query(DemoDB.TABLE_DEMO)
       )
   )
   .QueryTable(sqlConnection);
+```
 
+```csharp
 // SELECT Id,Name FROM Demo WHERE (Id>'123' AND Id<'456') OR (Name LIKE 'ABC%');
 Db.Query(DemoDB.TABLE_DEMO)
   .Select(
@@ -151,7 +157,9 @@ Db.Query(DemoDB.TABLE_DEMO)
       )
   )
   .QueryTable(sqlConnection);
+```
 
+```csharp
 // SELECT Id,Name FROM Demo WHERE Id IN ("123", "456");
 Db.Query(DemoDB.TABLE_DEMO)
   .Select(
@@ -169,7 +177,9 @@ Db.Query(DemoDB.TABLE_DEMO)
       )
   )
   .QueryTable(sqlConnection);
+```
 
+```csharp
 // SELECT Id,Name FROM Demo WHERE Id IN (SELECT Id FROM Demo WHERE ZipCode="200");
 Db.Query(DemoDB.TABLE_DEMO)
   .Select(
@@ -208,7 +218,3 @@ Db.Query(DemoDB.TABLE_DEMO)
   )
   .QueryTable(sqlConnection);
 ```
-
-
-
-
