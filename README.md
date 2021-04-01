@@ -25,8 +25,7 @@ public class DemoDB {
 ```
 
 ```csharp
-// TODO: fill db connection arguments
-using (MySqlConnection sqlConnection = new MySqlConnection("..."))
+using (MySqlConnection sqlConnection = new MySqlConnection(/*db connection string*/))
 {
   sqlConnection.Open();
 
@@ -259,7 +258,7 @@ public object QueryForCache(MySqlConnection sqlConnection, MySqlTransaction sqlT
 
 ```csharp
 // Use catche
-DbCache catcheDemo = new DbCache(new MySqlConnection("..."));
+DbCache catcheDemo = new DbCache(new MySqlConnection(/*db connection string*/));
 DemoItem item123 = catcheDemo.DefaultCache(QueryForCache, "123") as DemoItem;			// from DB
 DemoItem item123_again = catcheDemo.DefaultCache(QueryForCache, "123") as DemoItem;		// from Cache
 
