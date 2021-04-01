@@ -251,7 +251,9 @@ public object QueryByCatche(MySqlConnection sqlConnection, MySqlTransaction sqlT
 
     return item;
 }
+```
 
+```csharp
 // Use catche
 DbCache catcheDemo = new DbCache(new MySqlConnection("..."));
 DemoItem item123 = catcheDemo.DefaultCache(QueryByCatche, "123") as DemoItem;			// from DB
